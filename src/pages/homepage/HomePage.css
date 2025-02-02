@@ -1,0 +1,6 @@
+.homePageBody{
+    width: 100%;
+    height: max-content;
+    background-color: white;
+    display: flex;
+}

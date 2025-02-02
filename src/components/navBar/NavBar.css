@@ -1,0 +1,76 @@
+.navBarBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 133vh;
+    width: 250px;
+    background-color: black;
+    color: white;
+    padding: 20px 0;
+  }
+  
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  
+  .bottom {
+    margin-top: auto;
+  }
+  
+  .nav-item {
+    width: 100%;
+  }
+  
+  .nav-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s;
+  }
+  
+  .nav-button:hover,
+  .nav-button.active {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .icons {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .nav-text {
+    font-size: 16px;
+  }
+  
+  .submenu {
+    margin-left: 20px;
+  }
+  
+  .submenu-item {
+    display: block;
+    width: 100%;
+    padding: 8px 20px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: left;
+    transition: background-color 0.3s;
+  }
+  
+  .submenu-item:hover,
+  .submenu-item.active {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  
