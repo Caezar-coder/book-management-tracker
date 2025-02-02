@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import "./Books.css"
-import Modal from "../modal/Modal"
+import Modal from  "../modal/Modal"
 
 const BookTable = () => {
   const [books, setBooks] = useState([])
@@ -80,7 +80,8 @@ const BookTable = () => {
             isAvailable: true,
           })
           alert("Book added successfully")
-        } else {
+        }
+         else {
           throw new Error("Unexpected response format from API")
         }
       })
@@ -180,268 +181,244 @@ const BookTable = () => {
     <div className="container">
       <div className="card">
         <div className="card-header">
-          <div className="card-title">Book Catalog</div>
+          <h2 className="card-title">Book Catalog</h2>
           <div className="search-container">
-            <div className="search-input-wrapper">
-              <input type="text" placeholder="Search books..." className="search-input" />
-            </div>
-            <div className="search-icon">🔍</div>
+            <input type="text" placeholder="Search books..." className="search-input" />
+            <span className="search-icon">🔍</span>
           </div>
-          <div className="add-book-button" onClick={handleAddClick}>
+          <button className="btn btn-primary" onClick={handleAddClick}>
             Add Book
-          </div>
+          </button>
         </div>
         <div className="table-container">
-          <div className="table">
-            <div className="table-header">
-              <div className="table-row">
-                <div className="table-cell">Title</div>
-                <div className="table-cell">Author</div>
-                <div className="table-cell">Genre</div>
-                <div className="table-cell">ISBN</div>
-                <div className="table-cell">Year</div>
-                <div className="table-cell">Status</div>
-                <div className="table-cell">Actions</div>
-              </div>
-            </div>
-            <div className="table-body">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>ISBN</th>
+                <th>Year</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
               {currentBooks.map((book) => (
-                <div className="table-row" key={book.id}>
-                  <div className="table-cell">{book.title}</div>
-                  <div className="table-cell">{book.author}</div>
-                  <div className="table-cell">{book.genre}</div>
-                  <div className="table-cell">{book.ISBN}</div>
-                  <div className="table-cell">{book.publicationYear}</div>
-                  <div className="table-cell">{book.isAvailable ? "Available" : "Unavailable"}</div>
-                  <div className="table-cell">
-                    <div className="btn btn-outline" onClick={() => handleEditClick(book)}>
+                <tr key={book.id}>
+                  <td>{book.title}</td>
+                  <td>{book.author}</td>
+                  <td>{book.genre}</td>
+                  <td>{book.ISBN}</td>
+                  <td>{book.publicationYear}</td>
+                  <td>{book.isAvailable ? "Available" : "Unavailable"}</td>
+                  <td>
+                    <button className="btn btn-outline" onClick={() => handleEditClick(book)}>
                       Edit
-                    </div>
-                    <div className="btn btn-danger" onClick={() => handleDeleteClick(book)}>
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleDeleteClick(book)}>
                       Delete
-                    </div>
-                  </div>
-                </div>
+                    </button>
+                  </td>
+                </tr>
               ))}
-            </div>
-          </div>
+            </tbody>
+          </table>
         </div>
         <div className="pagination">
-          <div className="pagination-info">
+          <span>
             Showing {indexOfFirstBook + 1} to {Math.min(indexOfLastBook, books.length)} of {books.length} entries
-          </div>
-          <div className="pagination-controls">
-            <div
-              className={`btn btn-outline ${currentPage === 1 ? "disabled" : ""}`}
-              onClick={() => paginate(currentPage - 1)}
-            >
+          </span>
+          <div>
+            <button className="btn btn-outline" onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
               Previous
-            </div>
+            </button>
             {Array.from({ length: totalPages }, (_, i) => (
-              <div
+              <button
                 key={i + 1}
                 className={`btn ${currentPage === i + 1 ? "btn-primary" : "btn-outline"}`}
                 onClick={() => paginate(i + 1)}
               >
                 {i + 1}
-              </div>
+              </button>
             ))}
-            <div
-              className={`btn btn-outline ${currentPage === totalPages ? "disabled" : ""}`}
+            <button
+              className="btn btn-outline"
               onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
             >
               Next
-            </div>
+            </button>
           </div>
         </div>
       </div>
 
       {/* Add Book Modal */}
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
-        <div className="modal-content">
-          <div className="modal-title">Add New Book</div>
-          <div className="modal-form">
-            <div className="form-group">
-              <div className="form-label">Title:</div>
-              <div className="form-input">
-                <input
-                  type="text"
-                  value={newBook.title}
-                  onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">Author:</div>
-              <div className="form-input">
-                <input
-                  type="text"
-                  value={newBook.author}
-                  onChange={(e) => setNewBook({ ...newBook, author: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">Genre:</div>
-              <div className="form-input">
-                <input
-                  type="text"
-                  value={newBook.genre}
-                  onChange={(e) => setNewBook({ ...newBook, genre: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">ISBN:</div>
-              <div className="form-input">
-                <input
-                  type="text"
-                  value={newBook.ISBN}
-                  onChange={(e) => setNewBook({ ...newBook, ISBN: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">Publication Year:</div>
-              <div className="form-input">
-                <input
-                  type="date"
-                  value={newBook.publicationYear}
-                  onChange={(e) => setNewBook({ ...newBook, publicationYear: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">Status:</div>
-              <div className="form-input">
-                <select
-                  value={newBook.isAvailable}
-                  onChange={(e) => setNewBook({ ...newBook, isAvailable: e.target.value === "true" })}
-                >
-                  <option value="true">Available</option>
-                  <option value="false">Unavailable</option>
-                </select>
-              </div>
-            </div>
+        <h3 className="modal-title">Add New Book</h3>
+        <form onSubmit={handleAddBook}>
+          <div className="form-group">
+            <label htmlFor="title">Title:</label>
+            <input
+              type="text"
+              id="title"
+              value={newBook.title}
+              onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="author">Author:</label>
+            <input
+              type="text"
+              id="author"
+              value={newBook.author}
+              onChange={(e) => setNewBook({ ...newBook, author: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="genre">Genre:</label>
+            <input
+              type="text"
+              id="genre"
+              value={newBook.genre}
+              onChange={(e) => setNewBook({ ...newBook, genre: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="isbn">ISBN:</label>
+            <input
+              type="text"
+              id="isbn"
+              value={newBook.ISBN}
+              onChange={(e) => setNewBook({ ...newBook, ISBN: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="year">Publication Year:</label>
+            <input
+              type="date"
+              id="year"
+              value={newBook.publicationYear}
+              onChange={(e) => setNewBook({ ...newBook, publicationYear: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="availability">Status:</label>
+            <select
+              id="availability"
+              value={newBook.isAvailable}
+              onChange={(e) => setNewBook({ ...newBook, isAvailable: e.target.value === "true" })}
+            >
+              <option value="true">Available</option>
+              <option value="false">Unavailable</option>
+            </select>
           </div>
           <div className="modal-footer">
-            <div className="btn btn-outline" onClick={() => setIsAddModalOpen(false)}>
+            <button type="button" className="btn btn-outline" onClick={() => setIsAddModalOpen(false)}>
               Cancel
-            </div>
-            <div className="btn btn-primary" onClick={handleAddBook}>
+            </button>
+            <button type="submit" className="btn btn-primary">
               Add Book
-            </div>
+            </button>
           </div>
-        </div>
+        </form>
       </Modal>
 
       {/* Edit Book Modal */}
       <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
-        <div className="modal-content">
-          <div className="modal-title">Edit Book</div>
-          <div className="modal-form">
-            <div className="form-group">
-              <div className="form-label">Title:</div>
-              <div className="form-input">
-                <input
-                  type="text"
-                  value={bookToEdit?.title || ""}
-                  onChange={(e) => setBookToEdit({ ...bookToEdit, title: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">Author:</div>
-              <div className="form-input">
-                <input
-                  type="text"
-                  value={bookToEdit?.author || ""}
-                  onChange={(e) => setBookToEdit({ ...bookToEdit, author: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">Genre:</div>
-              <div className="form-input">
-                <input
-                  type="text"
-                  value={bookToEdit?.genre || ""}
-                  onChange={(e) => setBookToEdit({ ...bookToEdit, genre: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">ISBN:</div>
-              <div className="form-input">
-                <input
-                  type="text"
-                  value={bookToEdit?.ISBN || ""}
-                  onChange={(e) => setBookToEdit({ ...bookToEdit, ISBN: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">Publication Year:</div>
-              <div className="form-input">
-                <input
-                  type="number"
-                  value={bookToEdit?.publicationYear || ""}
-                  onChange={(e) => setBookToEdit({ ...bookToEdit, publicationYear: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="form-label">Availability:</div>
-              <div className="form-input">
-                <select
-                  value={bookToEdit?.isAvailable}
-                  onChange={(e) => setBookToEdit({ ...bookToEdit, isAvailable: e.target.value === "true" })}
-                >
-                  <option value="true">Available</option>
-                  <option value="false">Unavailable</option>
-                </select>
-              </div>
-            </div>
+        <h3 className="modal-title">Edit Book</h3>
+        <form onSubmit={handleEditBook}>
+          <div className="form-group">
+            <label htmlFor="edit-title">Title:</label>
+            <input
+              type="text"
+              id="edit-title"
+              value={bookToEdit?.title || ""}
+              onChange={(e) => setBookToEdit({ ...bookToEdit, title: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-author">Author:</label>
+            <input
+              type="text"
+              id="edit-author"
+              value={bookToEdit?.author || ""}
+              onChange={(e) => setBookToEdit({ ...bookToEdit, author: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-genre">Genre:</label>
+            <input
+              type="text"
+              id="edit-genre"
+              value={bookToEdit?.genre || ""}
+              onChange={(e) => setBookToEdit({ ...bookToEdit, genre: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-isbn">ISBN:</label>
+            <input
+              type="text"
+              id="edit-isbn"
+              value={bookToEdit?.ISBN || ""}
+              onChange={(e) => setBookToEdit({ ...bookToEdit, ISBN: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-year">Publication Year:</label>
+            <input
+              type="number"
+              id="edit-year"
+              value={bookToEdit?.publicationYear || ""}
+              onChange={(e) => setBookToEdit({ ...bookToEdit, publicationYear: e.target.value })}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-availability">Availability:</label>
+            <select
+              id="edit-availability"
+              value={bookToEdit?.isAvailable}
+              onChange={(e) => setBookToEdit({ ...bookToEdit, isAvailable: e.target.value === "true" })}
+            >
+              <option value="true">Available</option>
+              <option value="false">Unavailable</option>
+            </select>
           </div>
           <div className="modal-footer">
-            <div className="btn btn-outline" onClick={() => setIsEditModalOpen(false)}>
+            <button type="button" className="btn btn-outline" onClick={() => setIsEditModalOpen(false)}>
               Cancel
-            </div>
-            <div className="btn btn-primary" onClick={handleEditBook}>
+            </button>
+            <button type="submit" className="btn btn-primary">
               Save Changes
-            </div>
+            </button>
           </div>
-        </div>
+        </form>
       </Modal>
 
       {/* Delete Confirmation Dialog */}
       {isDeleteDialogOpen && (
         <div className="dialog">
-          <div className="dialog-content">
-            <div className="dialog-header">
-              <div className="dialog-title">Confirm Deletion</div>
-              <div className="dialog-description">
-                Are you sure you want to delete the book "{bookToDelete?.title}"?
-              </div>
-            </div>
-            <div className="dialog-footer">
-              <div className="btn btn-outline" onClick={handleDeleteCancel}>
-                Cancel
-              </div>
-              <div className="btn btn-danger" onClick={handleDeleteConfirm}>
-                Delete
-              </div>
-            </div>
+          <div className="dialog-header">
+            <h3 className="dialog-title">Confirm Deletion</h3>
+            <p className="dialog-description">Are you sure you want to delete the book "{bookToDelete?.title}"?</p>
+          </div>
+          <div className="dialog-footer">
+            <button className="btn btn-outline" onClick={handleDeleteCancel}>
+              Cancel
+            </button>
+            <button className="btn btn-danger" onClick={handleDeleteConfirm}>
+              Delete
+            </button>
           </div>
         </div>
       )}
