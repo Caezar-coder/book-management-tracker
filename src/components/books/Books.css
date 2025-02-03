@@ -1,7 +1,10 @@
 .container {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
+    height: 70vh;
+    margin: auto;
+    display: flex;
+    align-items: center;
+  
   }
   
   .card {
@@ -110,6 +113,9 @@
 
   }
   
+  .btn-holder{
+    display: flex;
+  }
   .btn-primary {
     background-color: black;
     color: white;

@@ -160,8 +160,6 @@ const BookTable = () => {
   const handleAddClick = () => {
     setIsAddModalOpen(true)
   }
-
-  // Pagination logic
   const indexOfLastBook = currentPage * booksPerPage
   const indexOfFirstBook = indexOfLastBook - booksPerPage
   const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook)
@@ -213,12 +211,14 @@ const BookTable = () => {
                   <td>{book.publicationYear}</td>
                   <td>{book.isAvailable ? "Available" : "Unavailable"}</td>
                   <td>
-                    <button className="btn btn-outline" onClick={() => handleEditClick(book)}>
+                   <div className="btn-holder">
+                   <button className="btn btn-outline" onClick={() => handleEditClick(book)}>
                       Edit
                     </button>
                     <button className="btn btn-danger" onClick={() => handleDeleteClick(book)}>
                       Delete
                     </button>
+                   </div>
                   </td>
                 </tr>
               ))}
@@ -252,8 +252,6 @@ const BookTable = () => {
           </div>
         </div>
       </div>
-
-      {/* Add Book Modal */}
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
         <h3 className="modal-title">Add New Book</h3>
         <form onSubmit={handleAddBook}>
@@ -328,8 +326,6 @@ const BookTable = () => {
           </div>
         </form>
       </Modal>
-
-      {/* Edit Book Modal */}
       <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
         <h3 className="modal-title">Edit Book</h3>
         <form onSubmit={handleEditBook}>
@@ -404,8 +400,6 @@ const BookTable = () => {
           </div>
         </form>
       </Modal>
-
-      {/* Delete Confirmation Dialog */}
       {isDeleteDialogOpen && (
         <div className="dialog">
           <div className="dialog-header">
